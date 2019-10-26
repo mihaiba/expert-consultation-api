@@ -19,4 +19,6 @@ public interface StorageApi {
     String storeFile(final MultipartFile document) throws IOException, URISyntaxException, Exception;
 
     byte[] loadFile(String documentURI) throws IOException;
+
+    void deleteFile(String documentURI) throws IOException;
 }

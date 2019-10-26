@@ -67,4 +67,9 @@ public class AmazonS3StorageService implements StorageApi {
                 .getObjectContent()
                 .readAllBytes();
     }
+
+    @Override
+    public void deleteFile(String documentURI) throws IOException {
+        amazonS3.deleteObject(documentBucket, documentURI);
+    }
 }

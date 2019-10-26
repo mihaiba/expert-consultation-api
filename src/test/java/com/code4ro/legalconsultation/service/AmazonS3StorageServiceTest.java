@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -56,8 +57,20 @@ public class AmazonS3StorageServiceTest {
         object.setObjectContent(new ByteArrayInputStream("text".getBytes()));
         when(client.getObject(documentBucket, uri)).thenReturn(object);
 
-        storageService.loadFile("uri");
+        storageService.loadFile(uri);
 
         verify(client).getObject(documentBucket, uri);
+    }
+
+    @Test
+    public void deleteFile() throws IOException {
+        final String uri = "uri";
+        final S3Object object = new S3Object();
+        object.setObjectContent(new ByteArrayInputStream("text".getBytes()));
+        doNothing().when(client).deleteObject(documentBucket, uri);
+
+        storageService.deleteFile(uri);
+
+        verify(client).deleteObject(documentBucket, uri);
     }
 }
